@@ -1,0 +1,72 @@
+package com.axis.mtb.controller;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axis.mtb.entity.RatingAndReview;
+import com.axis.mtb.service.RatingAndReviewService;
+
+@RestController
+@RequestMapping("/ratings")
+public class RatingAndReviewController {
+
+	@Autowired
+	private RatingAndReviewService ratingAndReviewService;
+
+	public RatingAndReviewController(RatingAndReviewService ratingAndReviewService) {
+		super();
+		this.ratingAndReviewService = ratingAndReviewService;
+	}
+	
+	@GetMapping("/allRatings")
+	public List<RatingAndReview> getRatings() {
+		return ratingAndReviewService.getAllRatings();
+	}
+
+	@GetMapping("/getRatingById/{ratingId}")
+	public RatingAndReview getRatingById(@PathVariable Integer ratingId) throws NotFoundException {
+		return ratingAndReviewService.getRatingById(ratingId);
+	}
+	
+	@GetMapping("/getRatingByUser/{userName}")
+	public List<RatingAndReview> getRatingByUser(@PathVariable String userName) throws NotFoundException {
+		return ratingAndReviewService.getRatingByUser(userName);
+	}
+	
+	@GetMapping("/getRatingByMovieId/{movieId}")
+	public List<RatingAndReview> getRatingByMovieId(@PathVariable Integer movieId) throws NotFoundException {
+		return ratingAndReviewService.getRatingByMovieId(movieId);
+	}
+	
+	@GetMapping("/getRatingByMovieTitle/{movieTitle}")
+	public List<RatingAndReview> getRatingByMovieTitle(@PathVariable String movieTitle) throws NotFoundException {
+		return ratingAndReviewService.getRatingByMovieTitle(movieTitle);
+	}
+
+	@PostMapping("/createRating")
+	// @ResponseStatus(HttpStatus.CREATED)
+	public RatingAndReview createRating(@RequestBody RatingAndReview rating) {
+		return ratingAndReviewService.createRating(rating);
+	}
+
+	@PutMapping("/updateRatingById/{ratingId}")
+	public RatingAndReview updateRatingById(@PathVariable Integer ratingId, @RequestBody RatingAndReview rating) throws NotFoundException {
+		return ratingAndReviewService.updateRatingById(ratingId, rating);
+	}
+
+	@DeleteMapping("/deleteRatingById/{ratingId}")
+	public void deleteUserById(@PathVariable Integer ratingId) throws NotFoundException {
+		ratingAndReviewService.deleteRatingById(ratingId);
+	}
+	
+}

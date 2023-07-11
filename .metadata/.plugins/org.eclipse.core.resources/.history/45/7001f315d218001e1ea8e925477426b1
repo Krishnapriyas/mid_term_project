@@ -1,0 +1,173 @@
+package com.axis.mtb.entity;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "movies")
+public class Movie {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "movie_id")
+	private int movieId;
+
+	@Column(name = "movie_title")
+	private String movieTitle;
+
+	@Column(name = "genre")
+	private String genre;
+
+	@Column(name = "director")
+	private String director;
+
+	@Column(name = "duration")
+	private Time duration;
+
+	@Column(name = "release_date")
+	private Date releaseDate;
+	/*
+	 * @Column(name = "rating") private float rating;
+	 * 
+	 * @Column(name = "review") private String review;
+	 */
+
+	@OneToMany(mappedBy = "movie",cascade = CascadeType.ALL,fetch = FetchType.LAZY)
+    private List<ShowTime> showtimes;
+	
+	@OneToMany(mappedBy = "movie",cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    private List<RatingAndReview> ratingAndReview;
+	/*
+	 * @ManyToOne
+	 * 
+	 * @JoinColumn(name = "theater_id") private Theater theater;
+	 */
+	 
+
+	  
+	/*
+	 * public Movie(int movieId, String movieTitle, String genre, String director,
+	 * Time duration, Date releaseDate, float rating, String review, Theater
+	 * theater) { super(); this.movieId = movieId; this.movieTitle = movieTitle;
+	 * this.genre = genre; this.director = director; this.duration = duration;
+	 * this.releaseDate = releaseDate; this.rating = rating; this.review = review;
+	 * this.theater = theater; }
+	 */
+	/*
+	 * public Theater getTheater() { return theater; }
+	 * 
+	 * public void setTheater(Theater theater) { this.theater = theater; }
+	 */
+
+	public List<ShowTime> getShowtimes() {
+		return showtimes;
+	}
+
+	public Movie(int movieId, String movieTitle, String genre, String director, Time duration, Date releaseDate,
+			float rating, String review, List<ShowTime> showtimes) {
+		super();
+		this.movieId = movieId;
+		this.movieTitle = movieTitle;
+		this.genre = genre;
+		this.director = director;
+		this.duration = duration;
+		this.releaseDate = releaseDate;
+		this.rating = rating;
+		this.review = review;
+		this.showtimes = showtimes;
+	}
+
+	
+	public void setShowtimes(List<ShowTime> showtimes) {
+		this.showtimes = showtimes;
+	}
+
+	public int getMovieId() {
+		return movieId;
+	}
+
+	public void setMovieId(int movieId) {
+		this.movieId = movieId;
+	}
+
+	public String getMovieTitle() {
+		return movieTitle;
+	}
+
+	public void setMovieTitle(String movieTitle) {
+		this.movieTitle = movieTitle;
+	}
+
+	public String getGenre() {
+		return genre;
+	}
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+	public String getDirector() {
+		return director;
+	}
+
+	public void setDirector(String director) {
+		this.director = director;
+	}
+
+	public Time getDuration() {
+		return duration;
+	}
+
+	public void setDuration(Time duration) {
+		this.duration = duration;
+	}
+
+	public Date getReleaseDate() {
+		return releaseDate;
+	}
+
+	public void setReleaseDate(Date releaseDate) {
+		this.releaseDate = releaseDate;
+	}
+
+
+
+	public Movie(int movieId, String movieTitle, String genre, String director, Time duration, Date releaseDate,
+			float rating, String review) {
+		super();
+		this.movieId = movieId;
+		this.movieTitle = movieTitle;
+		this.genre = genre;
+		this.director = director;
+		this.duration = duration;
+		this.releaseDate = releaseDate;
+		this.rating = rating;
+		this.review = review;
+	}
+
+	public Movie() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "Movie [movieId=" + movieId + ", movieTitle=" + movieTitle + ", genre=" + genre + ", director="
+				+ director + ", duration=" + duration + ", releaseDate=" + releaseDate + ", rating=" + rating
+				+ ", review=" + review + ", showtimes=" + showtimes + "]";
+	}
+
+
+
+}

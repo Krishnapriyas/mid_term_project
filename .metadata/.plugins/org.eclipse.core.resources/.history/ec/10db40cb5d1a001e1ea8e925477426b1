@@ -1,0 +1,5 @@
+package com.axis.mtb.exception;
+
+public class NotFoundException {
+
+}

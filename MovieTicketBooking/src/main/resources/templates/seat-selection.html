@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Seat Selection</title>
+</head>
+<body>
+    <h1>Seat Selection</h1>
+    <form th:action="@{/seats/{theaterId}(theaterId=${theater.id})}" method="post">
+        <table>
+            <tr th:each="row : ${theater.seatMap}">
+                <td th:each="seat : ${row}">
+                    <input type="checkbox" th:field="*{selectedSeats}" th:value="${row.index * row.size() + seat.index}" th:checked="${!seat}"/>
+                </td>
+            </tr>
+        </table>
+        <input type="submit" value="Confirm Selection"/>
+    </form>
+</body>
+</html>

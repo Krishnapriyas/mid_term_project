@@ -1,0 +1,136 @@
+
+package com.axis.mtb.entity;
+
+import java.util.List;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+@Entity
+@Table(name = "theaters")
+public class Theater {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "theater_id")
+	private int theaterId;
+
+	@Column(name = "theatre_name")
+	private String theaterName;
+
+	@Column(name = "location")
+	private String location;
+
+	/*
+	 * @Column(name = "seating_capacity") private int seatingCapacity;
+	 */
+
+	@OneToMany(mappedBy = "theater")
+	private List<ShowTime> showTime;
+
+	// private List<Seat> seats;
+
+	/*
+	 * @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL) private
+	 * List<Movie> movies;
+	 */
+
+	// @ManyToMany private List<Amenity> amenities;
+	/*
+	 * private List<List<Boolean>> seatMap;
+	 * 
+	 * @OneToMany(mappedBy = "theater", cascade = CascadeType.ALL) private
+	 * List<Movie> movie;
+	 */
+
+	/*
+	 * @OneToMany(mappedBy = "theater") private List<ShowTime> showtimes;
+	 */
+
+	/*
+	 * public Theater(int theatreId, String theatreName, String location, int
+	 * seatingCapacity, List<ShowTime> showtimes) { super(); this.theatreId =
+	 * theatreId; this.theatreName = theatreName; this.location = location;
+	 * this.seatingCapacity = seatingCapacity; this.showtimes = showtimes; }
+	 */
+	/*
+	 * public List<ShowTime> getShowtimes() { return showtimes; }
+	 * 
+	 * public void setShowtimes(List<ShowTime> showtimes) { this.showtimes =
+	 * showtimes; }
+	 */
+
+	public int getTheaterId() {
+		return theaterId;
+	}
+
+	public List<ShowTime> getShowTime() {
+		return showTime;
+	}
+
+	public void setShowTime(List<ShowTime> showTime) {
+		this.showTime = showTime;
+	}
+
+	public void setTheaterId(int theaterId) {
+		this.theaterId = theaterId;
+	}
+
+	public String getTheaterName() {
+		return theaterName;
+	}
+
+	public void setTheaterName(String theaterName) {
+		this.theaterName = theaterName;
+	}
+
+	public String getLocation() {
+		return location;
+	}
+
+	public void setLocation(String location) {
+		this.location = location;
+	}
+
+	/*
+	 * public Theater(int theatreId, String theatreName, String location, int
+	 * seatingCapacity, List<List<Boolean>> seatMap) { super(); this.theatreId =
+	 * theatreId; this.theatreName = theatreName; this.location = location;
+	 * this.seatingCapacity = seatingCapacity; this.seatMap = seatMap; }
+	 */
+
+	public Theater() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public Theater(int theaterId, String theaterName, String location, List<ShowTime> showTime) {
+		super();
+		this.theaterId = theaterId;
+		this.theaterName = theaterName;
+		this.location = location;
+		this.showTime = showTime;
+	}
+
+	@Override
+	public String toString() {
+		return "Theater [theaterId=" + theaterId + ", theaterName=" + theaterName + ", location=" + location
+				+ ", showTime=" + showTime + "]";
+	}
+
+	/*
+	 * @Override public String toString() { return "Theater [theatrId=" + theatreId
+	 * + ", theatreName=" + theatreName + ", location=" + location +
+	 * ", seatingCapacity=" + seatingCapacity + "]"; }
+	 */
+
+}

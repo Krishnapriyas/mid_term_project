@@ -1,0 +1,63 @@
+package com.axis.mtb.entity;
+
+import java.util.List;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "seat_selection")
+public class SeatSelectionRequest {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int selectionId;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "customer_id")
+	private User user;
+	/* private String userId; */
+	private List<String> selectedSeats;
+
+	public SeatSelectionRequest() {
+		
+	}
+
+	public SeatSelectionRequest(User user, List<String> selectedSeats) {
+		this.user = user;
+		this.selectedSeats = selectedSeats;
+	}
+
+	// Getters and setters
+
+	public User getUser() {
+		return user;
+	}
+
+	public void setUser(User user) {
+		this.user = user;
+	}
+
+	public List<String> getSelectedSeats() {
+		return selectedSeats;
+	}
+
+	public void setSelectedSeats(List<String> selectedSeats) {
+		this.selectedSeats = selectedSeats;
+	}
+
+	public SeatSelectionRequest(int selectionId, User user, List<String> selectedSeats) {
+		super();
+		this.selectionId = selectionId;
+		this.user = user;
+		this.selectedSeats = selectedSeats;
+	}
+	
+	
+}

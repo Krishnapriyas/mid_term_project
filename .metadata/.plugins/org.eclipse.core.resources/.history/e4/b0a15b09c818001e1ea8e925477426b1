@@ -1,0 +1,64 @@
+package com.axis.mtb.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.axis.mtb.entity.RatingAndReview;
+import com.axis.mtb.entity.Theater;
+import com.axis.mtb.repository.RatingAndReviewRepository;
+
+@Service
+public class RatingAndReviewService {
+
+
+	@Autowired
+	private RatingAndReviewRepository ratingRepositoy;
+
+	public List<RatingAndReview> getAllRatings() {
+		return ratingRepositoy.findAll();
+	}
+
+	public RatingAndReview getRatingById(Integer ratingId) throws NotFoundException {
+		return ratingRepositoy.findById(ratingId).orElseThrow(() -> new NotFoundException());
+	}
+	
+
+
+	public List<RatingAndReview> getRatingByMovieTitle(String movieTitle) {
+		return ratingRepositoy.findRatingByMovieTitle(movieTitle);
+	}
+
+	public RatingAndReview createTheater(Theater theater) {
+		return ratingRepositoy.save(theater);
+	}
+
+	public RatingAndReview updateTheaterById(Integer theaterId, RatingAndReview updateTheater) throws NotFoundException {
+		Theater theater = getTheaterById(theaterId);
+		theater.setTheatreId(updateTheater.getTheatreId());
+		theater.setTheatreName(updateTheater.getTheatreName());
+		theater.setLocation(updateTheater.getLocation());
+		theater.setSeatingCapacity(updateTheater.getSeatingCapacity());
+
+		return ratingRepositoy.save(theater);
+	}
+	
+	public RatingAndReview updateTheaterByName(String theaterName, RatingAndReview updateTheater) throws NotFoundException {
+		Theater theater = getTheaterByName(theaterName);
+		theater.setTheatreId(updateTheater.getTheatreId());
+		theater.setTheatreName(updateTheater.getTheatreName());
+		theater.setLocation(updateTheater.getLocation());
+		theater.setSeatingCapacity(updateTheater.getSeatingCapacity());
+
+		return ratingRepositoy.save(theater);
+	}
+
+	public void deleteTheaterById(Integer theaterId) throws NotFoundException {
+		RatingAndReview theater = getTheaterById(theaterId);
+		ratingRepositoy.delete(theater);
+
+	}
+
+}

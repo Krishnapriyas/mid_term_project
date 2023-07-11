@@ -1,0 +1,5 @@
+package com.axis.mtb.service;
+
+public class RatingAndReviewService {
+
+}

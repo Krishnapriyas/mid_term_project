@@ -1,0 +1,100 @@
+package com.axis.mtb.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.axis.mtb.entity.User;
+import com.axis.mtb.repository.UserRepository;
+
+@Service
+public class UserService {
+
+	@Autowired
+	private UserRepository userRepository;
+
+	public List<User> getAllUser() {
+
+		return userRepository.findAll();
+	}
+
+	public User getUserById(Integer userId) throws NotFoundException {
+		return userRepository.findById(userId).orElseThrow(() -> new NotFoundException());
+	}
+	
+	public User getUserByName(String userName) throws NotFoundException {
+		return userRepository.findByName(userName).orElseThrow(() -> new NotFoundException());
+	}
+
+
+	public User createUser(User user) {
+		return userRepository.save(user);
+	}
+
+	public User updateUserById(Integer userId, User updatedUser) throws NotFoundException {
+		User user = getUserById(userId);
+		user.setCustomerId(updatedUser.getCustomerId());
+		user.setBookings(updatedUser.getBookings());
+		user.setEmailId(updatedUser.getEmailId());
+		user.setIdentity(updatedUser.getIdentity());
+		user.setName(updatedUser.getName());
+		user.setPassword(updatedUser.getPassword());
+		user.setRatings(updatedUser.getRatings());
+		return userRepository.save(user);
+	}
+	
+	public User updateUserByName(String userName, User updatedUser) throws NotFoundException {
+		User user = getUserByName(userName);
+		user.setCustomerId(updatedUser.getCustomerId());
+		user.setBookings(updatedUser.getBookings());
+		user.setEmailId(updatedUser.getEmailId());
+		user.setIdentity(updatedUser.getIdentity());
+		user.setName(updatedUser.getName());
+		user.setPassword(updatedUser.getPassword());
+		user.setRatings(updatedUser.getRatings());
+
+		return userRepository.save(user);
+	}
+
+	public void deleteUserById(Integer userId) throws NotFoundException {
+		User user = getUserById(userId);
+		userRepository.delete(user);
+
+	}
+	
+	public void deleteUserByName(String userName) throws NotFoundException {
+		User user = getUserByName(userName);
+		userRepository.delete(user);
+
+	}
+
+	public User registerUser(String username, String password,String emailId, char identity) {
+
+		if (userRepository.existsByName(username)) {
+			throw new RuntimeException("Username already exists");
+		}
+		if (userRepository.existsByEmailId(emailId)) {
+			throw new RuntimeException("EmailId already exists");
+		}
+		
+		User user = new User(username, password,emailId,identity);
+		return userRepository.save(user);
+	}
+
+	public User loginUser(String username, String password) throws NotFoundException {
+		User user = getUserByName(username);
+
+		if (user == null) {
+			throw new RuntimeException("User not found");
+		}
+
+		if (!user.getPassword().equals(password)) {
+			throw new RuntimeException("Invalid password/user name");
+		}
+
+		return user;
+	}
+
+}

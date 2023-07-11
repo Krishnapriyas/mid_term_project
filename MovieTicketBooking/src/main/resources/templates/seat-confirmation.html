@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Seat Confirmation</title>
+</head>
+<body>
+    <h1>Seat Confirmation</h1>
+    <p>Selected Seats:</p>
+    <ul>
+        <li th:each="seat : ${selectedSeats}">
+            <span th:text="${seat}"></span>
+        </li>
+    </ul>
+    <p>Theater: <span th:text="${theater.theatreName}"></span></p>
+    <!-- Add any other relevant information or options here -->
+</body>
+</html>

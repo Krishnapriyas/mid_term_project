@@ -1,0 +1,76 @@
+package com.axis.mtb.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "seats")
+public class Seat {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int seatId;
+	
+	private String rowNo;
+	private int seatNo;
+	
+	private boolean isBooked;
+	
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "show_id")
+	private ShowTime showTime;
+	
+	public boolean isBooked() {
+		return isBooked;
+	}
+	public void setBooked(boolean isBooked) {
+		this.isBooked = isBooked;
+	}
+	public int getSeatId() {
+		return seatId;
+	}
+	public void setSeatId(int seatId) {
+		this.seatId = seatId;
+	}
+	public int getRowNo() {
+		return rowNo;
+	}
+	public void setRowNo(int rowNo) {
+		this.rowNo = rowNo;
+	}
+	public int getSeatNo() {
+		return seatNo;
+	}
+	public void setSeatNo(int seatNo) {
+		this.seatNo = seatNo;
+	}
+	
+	
+	public Seat(int seatId, int rowNo, int seatNo, boolean isBooked) {
+		super();
+		this.seatId = seatId;
+		this.rowNo = rowNo;
+		this.seatNo = seatNo;
+		this.isBooked = isBooked;
+	}
+	public Seat() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	@Override
+	public String toString() {
+		return "Seat [seatId=" + seatId + ", rowNo=" + rowNo + ", seatNo=" + seatNo + ", isBooked=" + isBooked + "]";
+	}
+	
+	
+	
+	
+}
+	

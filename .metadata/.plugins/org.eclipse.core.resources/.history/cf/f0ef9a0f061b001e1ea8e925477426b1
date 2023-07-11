@@ -1,0 +1,86 @@
+package com.axis.mtb.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
+
+@Entity
+@Table(name = "payments")
+public class Payment {
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "payment_id")
+	private int paymentId;
+	@Column(name = "amount")
+	private double amount;
+	@Column(name="payment_method")
+	private String paymentMethod;
+
+	@ManyToOne(fetch = FetchType.EAGER)
+	@Fetch(value = FetchMode.SUBSELECT)
+	@JoinColumn(name = "bookingHistory_id")
+	private BookingHistory bookingHistory;
+
+	public int getPaymentId() {
+		return paymentId;
+	}
+
+	public void setPaymentId(int paymentId) {
+		this.paymentId = paymentId;
+	}
+
+	public double getAmount() {
+		return amount;
+	}
+
+	public void setAmount(double amount) {
+		this.amount = amount;
+	}
+
+	public String getPaymentMethod() {
+		return paymentMethod;
+	}
+
+	public void setPaymentMethod(String paymentMethod) {
+		this.paymentMethod = paymentMethod;
+	}
+
+	public BookingHistory getBookingHistory() {
+		return bookingHistory;
+	}
+
+	public void setBookingHistory(BookingHistory bookingHistory) {
+		this.bookingHistory = bookingHistory;
+	}
+
+	public Payment(int paymentId, double amount, String paymentMethod, BookingHistory bookingHistory) {
+		super();
+		this.paymentId = paymentId;
+		this.amount = amount;
+		this.paymentMethod = paymentMethod;
+		this.bookingHistory = bookingHistory;
+	}
+
+	public Payment() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "Payment [paymentId=" + paymentId + ", amount=" + amount + ", paymentMethod=" + paymentMethod
+				+ ", bookingHistory=" + bookingHistory + "]";
+	}
+	
+	
+
+}

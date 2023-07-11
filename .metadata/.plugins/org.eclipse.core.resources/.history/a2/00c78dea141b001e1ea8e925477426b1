@@ -1,0 +1,22 @@
+package com.axis.mtb.repository;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+import com.axis.mtb.entity.RatingAndReview;
+
+@Repository
+public interface RatingAndReviewRepository extends JpaRepository<RatingAndReview, Integer> {
+
+	Optional<RatingAndReview> findById(Integer ratingId);
+
+	List<RatingAndReview> findRatingByMovie_MovieId(Integer movieId);
+	
+	List<RatingAndReview> findRatingByMovie_MovieTitle(String movieTitle);
+
+	List<RatingAndReview> findRatingByUser_Name(String userName);
+
+}

@@ -1,0 +1,143 @@
+package com.axis.mtb.entity;
+
+import java.sql.Date;
+import java.sql.Time;
+import java.util.List;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+
+import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
+
+@Entity
+@Table(name = "show_time")
+//@JsonIgnoreProperties({"movies"})
+public class ShowTime {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    private int id;
+
+    @ManyToOne
+    @JoinColumn(name = "movie_id")
+    //@JsonIgnore
+    private Movie movie;
+    
+    @ManyToOne
+    @JoinColumn(name = "theatre_id")
+    //@JsonIgnore
+    private Theater theater;
+
+    @Column(name = "show_date")
+    private Date showDate;
+    
+    @Column(name = "show_time")
+    private Time startTime;
+    
+    @Column(name = "available_seats")
+    private int availableSeats;
+    
+    @OneToMany(mappedBy = "showTime", cascade = CascadeType.ALL)
+    //@JsonIgnore
+    private List<BookingHistory> bookings;
+
+	
+
+	public Theater getTheater() {
+		return theater;
+	}
+
+	public void setTheater(Theater theater) {
+		this.theater = theater;
+	}
+
+	public List<BookingHistory> getBookings() {
+		return bookings;
+	}
+
+	public void setBookings(List<BookingHistory> bookings) {
+		this.bookings = bookings;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
+	}
+
+	public Movie getMovie() {
+		return movie;
+	}
+
+	public void setMovie(Movie movie) {
+		this.movie = movie;
+	}
+
+	/*
+	 * public Theater getTheater() { return theater; }
+	 * 
+	 * public void setTheater(Theater theater) { this.theater = theater; }
+	 */
+
+	public Date getShowDate() {
+		return showDate;
+	}
+
+	public void setShowDate(Date showDate) {
+		this.showDate = showDate;
+	}
+
+	public Time getStartTime() {
+		return startTime;
+	}
+
+	public void setStartTime(Time startTime) {
+		this.startTime = startTime;
+	}
+
+	public int getAvailableSeats() {
+		return availableSeats;
+	}
+
+	public void setAvailableSeats(int availableSeats) {
+		this.availableSeats = availableSeats;
+	}
+
+	public ShowTime() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	public ShowTime(int id, Movie movie, Theater theater, Date showDate, Time startTime, int availableSeats,
+			List<BookingHistory> bookings) {
+		super();
+		this.id = id;
+		this.movie = movie;
+		this.theater = theater;
+		this.showDate = showDate;
+		this.startTime = startTime;
+		this.availableSeats = availableSeats;
+		this.bookings = bookings;
+	}
+
+	@Override
+	public String toString() {
+		return "ShowTime [id=" + id + ", movie=" + movie + ", theater=" + theater + ", showDate=" + showDate
+				+ ", startTime=" + startTime + ", availableSeats=" + availableSeats + ", bookings=" + bookings + "]";
+	}
+
+	
+
+	
+    
+}

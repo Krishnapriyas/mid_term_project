@@ -1,0 +1,32 @@
+package com.axis.mtb.entity;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "ratings")
+public class RatingAndReview {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	@Column(name = "rating_id")
+	private int ratingId;
+
+	@Column(name = "rating")
+	private float rating;
+
+	@Column(name = "review")
+	private String review;
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "movie_id")
+    private Movie movie;
+	
+}

@@ -1,0 +1,64 @@
+package com.axis.mtb.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.axis.mtb.entity.Theater;
+import com.axis.mtb.repository.TheaterRepository;
+
+@Service
+public class TheaterService {
+
+	@Autowired
+	private TheaterRepository theaterRepository;
+
+	public List<Theater> getAllTheaters() {
+
+		return theaterRepository.findAll();
+	}
+
+	public Theater getTheaterById(Integer theaterId) throws NotFoundException {
+		return theaterRepository.findById(theaterId).orElseThrow(() -> new NotFoundException());
+	}
+
+	public List<Theater> searchTheatersByLocation(String location) {
+		return theaterRepository.findByLocation(location);
+	}
+
+	public Theater createTheater(Theater theater) {
+		return theaterRepository.save(theater);
+	}
+
+	public Theater updateTheaterById(Integer theaterId, Theater updateTheater) throws NotFoundException {
+		Theater theater = getTheaterById(theaterId);
+		theater.setTheatreId(updateTheater.getTheatreId());
+		theater.setTheatreName(updateTheater.getTheatreName());
+		theater.setLocation(updateTheater.getLocation());
+		theater.setSeatingCapacity(updateTheater.getSeatingCapacity());
+
+		return theaterRepository.save(theater);
+	}
+
+	public void deleteTheaterById(Integer theaterId) throws NotFoundException {
+		Theater theater = getTheaterById(theaterId);
+		theaterRepository.delete(theater);
+
+	}
+
+	public List<Theater> getTheatersByMovieId(Integer movieId) {
+		return theaterRepository.findByMovieId(movieId);
+	}
+
+	public List<Theater> getTheatersByMovieTitle(String movieTitle) {
+		return theaterRepository.findByMovieTitle(movieTitle);
+	}
+
+	/*
+	 * public List<Theater> searchTheatersByAmenity(String amenityName) { return
+	 * theaterRepository.findByAmenitiesName(amenityName); }
+	 */
+
+}

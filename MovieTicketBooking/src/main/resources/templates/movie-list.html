@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Movie List</title>
+</head>
+<body>
+    <h1>Movie List</h1>
+    <ul>
+        <li th:each="movie : ${movies}">
+            <!--<a th:href="@{/theaters/{movieId}(movieId=${movie.id})}">-->
+                <span th:text="${movie.movieTitle}"></span>
+            </a>
+        </li>
+    </ul>
+</body>
+</html>

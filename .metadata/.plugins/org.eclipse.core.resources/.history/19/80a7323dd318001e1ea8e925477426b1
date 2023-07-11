@@ -1,0 +1,98 @@
+package com.axis.mtb.controller;
+
+import java.util.List;
+import java.util.Optional;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+import com.axis.mtb.entity.Movie;
+import com.axis.mtb.entity.ShowTime;
+import com.axis.mtb.entity.Theater;
+import com.axis.mtb.service.TheaterService;
+
+@RestController
+@RequestMapping("/theaters")
+public class TheaterController {
+	@Autowired
+	private TheaterService theaterService;
+
+	@GetMapping("/allTheaters")
+	public List<Theater> getAllTheaters() {
+		return theaterService.getAllTheaters();
+	}
+
+	@GetMapping("/getTheaterById/{theaterId}")
+	public Theater getTheaterById(@PathVariable Integer theaterId) throws NotFoundException {
+		return theaterService.getTheaterById(theaterId);
+	}
+	
+	@GetMapping("/getTheaterByName/{theaterName}")
+	public Theater getTheaterByName(@PathVariable String theaterName) throws NotFoundException {
+		return theaterService.getTheaterByName(theaterName);
+	}
+
+	@GetMapping("/location/{locationName}")
+	public List<Theater> getTheaterByLocation(@PathVariable String locationName) throws NotFoundException {
+		return theaterService.getTheatersByLocation(locationName);
+	}
+	
+	@PostMapping("/createTheater")
+	//@ResponseStatus(HttpStatus.CREATED)
+	public Theater createTheater(@RequestBody Theater theater) {
+		return theaterService.createTheater(theater);
+	}
+
+	@PutMapping("/updateTheaterById/{theaterId}")
+	public Theater updateTheaterById(@PathVariable Integer theaterId, @RequestBody Theater theater) throws NotFoundException {
+		return theaterService.updateTheaterById(theaterId, theater);
+	}
+
+	@DeleteMapping("/deleteTheaterById/{theaterId}")
+	public void deleteTheaterById(@PathVariable Integer theaterId) throws NotFoundException {
+		theaterService.deleteTheaterById(theaterId);
+	}
+
+	/*
+	 * @GetMapping("/{theater_id}/showtimes") public ResponseEntity<List<ShowTime>>
+	 * getTheaterShowtimes(@PathVariable("theater_id") Integer theaterId) throws
+	 * NotFoundException { Optional<Theater> theaterOptional =
+	 * theaterService.getTheaterById(theaterId); if (theaterOptional.isPresent()) {
+	 * Theater theater = theaterOptional.get(); List<ShowTime> showtimes =
+	 * theater.getShowtimes(); return ResponseEntity.ok(showtimes); } else { return
+	 * ResponseEntity.notFound().build(); }
+	 * 
+	 * }
+	 */
+	/*
+	 * @GetMapping("/movie/{movieId}") public List<Theater>
+	 * getTheatersByMovie(@PathVariable int movieId) throws NotFoundException {
+	 * return theaterService.getTheatersByMovie(movieId); }
+	 * 
+	 * @GetMapping("/movieTitle/{movieTitle}") public List<Theater>
+	 * getTheatersByMovieTitle(@PathVariable String movieTitle) throws
+	 * NotFoundException { return
+	 * theaterService.getTheatersByMovieSelection(movieTitle); }
+	 */
+
+	/*
+	 * @GetMapping("/movies") public List<Theater>
+	 * getTheatersByMovie(@RequestParam("title") String movieTitle) { return
+	 * theaterService.searchTheatersByMovie(movieTitle); }
+	 */
+
+	/*
+	 * @GetMapping("/amenities") public List<Theater>
+	 * getTheatersByAmenity(@RequestParam("name") String amenityName) { return
+	 * theaterService.searchTheatersByAmenity(amenityName); }
+	 */
+}

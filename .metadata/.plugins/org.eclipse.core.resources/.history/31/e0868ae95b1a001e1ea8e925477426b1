@@ -1,0 +1,47 @@
+package com.axis.mtb.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.axis.mtb.entity.Payment;
+import com.axis.mtb.entity.Seat;
+import com.axis.mtb.repository.SeatRepository;
+
+@Service
+public class SeatService {
+	
+	@Autowired
+	private SeatRepository seatRepository;
+	
+	public List<Seat> getAllSeat() {
+
+		return seatRepository.findAll();
+	}
+
+	public Seat getSeatById(Integer seatId) throws NotFoundException {
+		return seatRepository.findById(seatId).orElseThrow(() -> new NotFoundException());
+	}
+
+	public Seat createSeat(Seat seat) {
+		return seatRepository.save(seat);
+	}
+
+	public Seat updateSeatById(Integer seatId, Seat updatedSeat) throws NotFoundException {
+		Seat seat = getSeatById(seatId);
+		seat.setSeatId(updatedSeat.getSeatId());
+		seat.setSeatNo(updatedSeat.getSeatNo());
+		seat.setBooked(updatedSeat.isBooked());
+		seat.setShowTime(updatedSeat.getShowTime());
+		seat.setSelected(updatedSeat.isSelected());
+		return seatRepository.save(seat);
+	}
+
+	public void deleteSeatById(Integer seatId) throws NotFoundException {
+		Seat seat = getSeatById(seatId);
+		seatRepository.delete(seat);
+		
+	}
+}

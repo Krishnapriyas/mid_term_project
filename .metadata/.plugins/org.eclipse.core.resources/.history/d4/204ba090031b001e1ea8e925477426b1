@@ -1,0 +1,116 @@
+package com.axis.mtb.entity;
+
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
+@Entity
+@Table(name = "seats")
+public class Seat {
+
+	@Id
+	@GeneratedValue(strategy = GenerationType.AUTO)
+	private int seatId;
+
+	private String seatNo;
+	/* private int seatNo; */
+
+	private boolean isBooked;
+	private boolean isSelected;
+
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "show_id")
+	private ShowTime showTime;
+
+	public ShowTime getShowTime() {
+		return showTime;
+	}
+
+	public void setShowTime(ShowTime showTime) {
+		this.showTime = showTime;
+	}
+
+	public boolean isBooked() {
+		return isBooked;
+	}
+
+	public void setBooked(boolean isBooked) {
+		this.isBooked = isBooked;
+	}
+
+	public int getSeatId() {
+		return seatId;
+	}
+
+	public void setSeatId(int seatId) {
+		this.seatId = seatId;
+	}
+
+
+	public boolean isSelected() {
+		return isSelected;
+	}
+
+	public void setSelected(boolean isSelected) {
+		this.isSelected = isSelected;
+	}
+
+	public String getSeatNo() {
+		return seatNo;
+	}
+
+	public void setSeatNo(String seatNo) {
+		this.seatNo = seatNo;
+	}
+
+	public Seat(int seatId, String seatNo, boolean isBooked) {
+		super();
+		this.seatId = seatId;
+		this.seatNo = seatNo;
+		this.isBooked = isBooked;
+	}
+
+	public Seat(int seatId, String seatNo, boolean isBooked, ShowTime showTime) {
+		super();
+		this.seatId = seatId;
+		this.seatNo = seatNo;
+		this.isBooked = isBooked;
+		this.showTime = showTime;
+	}
+	
+	public Seat(String seatNo, boolean isBooked) {
+        this.seatNo = seatNo;
+        this.isBooked = isBooked;
+        this.isSelected = false;
+    }
+	
+	
+	
+	
+
+	public Seat(int seatId, String seatNo, boolean isBooked, boolean isSelected, ShowTime showTime) {
+		super();
+		this.seatId = seatId;
+		this.seatNo = seatNo;
+		this.isBooked = isBooked;
+		this.isSelected = false;
+		this.showTime = showTime;
+	}
+
+	public Seat() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
+	@Override
+	public String toString() {
+		return "Seat [seatId=" + seatId + ", seatNo=" + seatNo + ", isBooked=" + isBooked + ", isSelected=" + isSelected
+				+ ", showTime=" + showTime + "]";
+	}
+
+}

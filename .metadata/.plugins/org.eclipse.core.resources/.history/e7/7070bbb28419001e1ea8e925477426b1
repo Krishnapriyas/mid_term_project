@@ -1,0 +1,54 @@
+package com.axis.mtb.service;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.crossstore.ChangeSetPersister.NotFoundException;
+import org.springframework.stereotype.Service;
+
+import com.axis.mtb.entity.RatingAndReview;
+import com.axis.mtb.repository.RatingAndReviewRepository;
+
+@Service
+public class RatingAndReviewService {
+
+	@Autowired
+	private RatingAndReviewRepository ratingRepositoy;
+
+	public List<RatingAndReview> getAllRatings() {
+		return ratingRepositoy.findAll();
+	}
+
+	public RatingAndReview getRatingById(Integer ratingId) throws NotFoundException {
+		return ratingRepositoy.findById(ratingId).orElseThrow(() -> new NotFoundException());
+	}
+
+	public List<RatingAndReview> getRatingByMovieId(Integer movieId) {
+		return ratingRepositoy.findRatingByMovieId(movieId);
+	}
+
+	public List<RatingAndReview> getRatingByUser(String userName) {
+		return ratingRepositoy.findRatingByUser(userName);
+	}
+
+	public RatingAndReview createRating(RatingAndReview rating) {
+		return ratingRepositoy.save(rating);
+	}
+
+	public RatingAndReview updateRatingById(Integer ratingId, RatingAndReview updateRating) throws NotFoundException {
+		RatingAndReview rating = getRatingById(ratingId);
+		rating.setRatingId(updateRating.getRatingId());
+		rating.setRating(updateRating.getRating());
+		rating.setReview(updateRating.getReview());
+		rating.setMovie(updateRating.getMovie());
+		rating.setUser(updateRating.getUser());
+		return ratingRepositoy.save(rating);
+	}
+
+	public void deleteRatingById(Integer ratingId) throws NotFoundException {
+		RatingAndReview rating = getRatingById(ratingId);
+		ratingRepositoy.delete(rating);
+
+	}
+
+}
